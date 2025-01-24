@@ -15,7 +15,7 @@ A procedural macro for lazily defined state arrays using ndarray.
 cargo add --git https://github.com/JWSchaefer/lazy-nd
 ```
 
-## :mag_right: Example
+## :mag: Example
 
 ```rust
 use lazy_nd::lazy_nd;
