@@ -1,13 +1,13 @@
 # lazy-nd
 
 <p align="center">
-  <img src="resources/logo.webp" width="160"/>
+<img src="resources/logo.webp" width="160"/>
 </p>
 
-A procedural macro for lazily defined state arrays using ndarray. 
+A procedural macro for lazily defined state arrays using ndarray.
 
 > [!NOTE]
-> This crate is a prototye. Functionality is not guarenteed and may change significantly.
+> This crate is a prototype. Functionality is not guaranteed and may change significantly.
 
 ## :rocket: Quickstart
 
@@ -15,7 +15,7 @@ A procedural macro for lazily defined state arrays using ndarray.
 cargo add --git https://github.com/JWSchaefer/lazy-nd
 ```
 
-## :mag_right: Example 
+## :mag_right: Example
 
 ```rust
 use lazy_nd::lazy_nd;
