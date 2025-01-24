@@ -13,9 +13,11 @@ use struct_info::StructInfo;
 use syn::parse_macro_input;
 
 /// Parses the following syntax
-///
+/// #[lazy_nd(dim = $DIM)]
 /// struct $STRUCT_NAME {
-///     #[$ATTR($FIELD : $TY)]
+///     $(
+///         #[$ATTR($FIELD : $TY)]
+///     )*
 ///     $VISABILITY $NAME : $TYPE,
 /// }
 ///

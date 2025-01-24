@@ -1,5 +1,5 @@
 error: field `position` already declared
- --> tests/07-duplicate.rs:6:14
+ --> tests/08-duplicate.rs:6:14
   |
 6 |     #[scalar(position : f32)]
   |              ^^^^^^^^

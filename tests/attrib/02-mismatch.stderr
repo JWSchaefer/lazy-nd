@@ -1,0 +1,5 @@
+error: Expected generic `<const G : usize>`
+ --> tests/attrib/02-mismatch.rs:4:12
+  |
+4 | struct Test<const D: usize> {}
+  |            ^

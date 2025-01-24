@@ -1,0 +1,5 @@
+error: Generic `<const D : usize>` already declared.
+ --> tests/04-generic_overload.rs:3:29
+  |
+3 | struct Test<const D: usize, const D: usize> {}
+  |                             ^^^^^

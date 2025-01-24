@@ -1,0 +1,7 @@
+error: Missing token `dim`.
+ --> tests/attrib/03-missing.rs:3:1
+  |
+3 | #[lazy_nd]
+  | ^^^^^^^^^^
+  |
+  = note: this error originates in the attribute macro `lazy_nd` (in Nightly builds, run with -Z macro-backtrace for more info)
