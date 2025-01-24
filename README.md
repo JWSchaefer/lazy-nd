@@ -34,8 +34,8 @@ struct State {
 
 fn main(){
     let state = State::new(15);
-    let velocity : ArrayView2<f64> = state.velocity(); # 3 x 15
-    let mass : ArrayViewMut2<f64> = state.mass_mut(); # 1 x 15
-    let live : ArrayView2<bool> = state.live(); #3 x 15
+    let velocity : ArrayView2<f64> = state.velocity(); // 3 x 15
+    let mass : ArrayViewMut2<f64> = state.mass_mut(); // 1 x 15
+    let live : ArrayView2<bool> = state.live(); //3 x 15
 }
 ```
