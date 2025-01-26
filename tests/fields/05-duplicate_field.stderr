@@ -1,0 +1,5 @@
+error: field `field` already declared
+ --> $DIR/05-duplicate_field.rs:7:5
+  |
+7 |     field: bool,
+  |     ^^^^^
