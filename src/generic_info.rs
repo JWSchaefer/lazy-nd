@@ -2,10 +2,7 @@ use syn::{spanned::Spanned, ConstParam, Error, Generics, Result};
 
 use crate::attribute_info::AttributeInfo;
 
-pub fn validate_generics(
-    attr: AttributeInfo,
-    generics: Generics,
-) -> Result<()> {
+pub fn validate_generics(attr: &AttributeInfo, generics: &Generics) -> Result<()> {
     let correct_params: Vec<&ConstParam> = generics
         .const_params()
         .filter(|&p| p.ident.to_string() == attr.ty.to_string())
@@ -14,10 +11,7 @@ pub fn validate_generics(
     if correct_params.len() < 1 {
         return Err(Error::new(
             generics.span(),
-            format!(
-                "Expected generic `<const {} : usize>`",
-                attr.ty.to_string()
-            ),
+            format!("Expected generic `<const {} : usize>`", attr.ty.to_string()),
         ));
     }
 

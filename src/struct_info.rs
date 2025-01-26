@@ -1,5 +1,5 @@
-use crate::attribute_field::AttributeField;
 use crate::struct_field::StructField;
+use crate::{attribute_field::AttributeField, generic_info::validate_generics};
 
 use syn::{
     braced,
@@ -19,15 +19,16 @@ pub struct StructInfo {
 }
 
 impl StructInfo {
-    pub fn unpack(
-        self,
-    ) -> (Ident, Generics, Vec<StructField>, Vec<AttributeField>) {
+    pub fn unpack(self) -> (Ident, Generics, Vec<StructField>, Vec<AttributeField>) {
         (
             self.name,
             self.generics,
             self.struct_fields,
             self.attribute_fields,
         )
+    }
+    pub fn generics(&self) -> &Generics {
+        &self.generics
     }
 }
 

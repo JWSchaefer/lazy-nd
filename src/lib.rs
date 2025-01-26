@@ -1,14 +1,15 @@
 mod attribute_field;
 mod attribute_info;
 mod generic_info;
+mod implement;
 mod quantity;
 mod struct_field;
 mod struct_info;
 
 use attribute_info::AttributeInfo;
 use generic_info::validate_generics;
+use implement::implement;
 use proc_macro::TokenStream;
-use quote::quote;
 use struct_info::StructInfo;
 use syn::parse_macro_input;
 
@@ -33,18 +34,12 @@ use syn::parse_macro_input;
 
 #[proc_macro_attribute]
 pub fn lazy_nd(attr: TokenStream, item: TokenStream) -> TokenStream {
-    let attr = parse_macro_input!(attr as AttributeInfo);
-    let parsed = parse_macro_input!(item as StructInfo);
+    let attr_info = parse_macro_input!(attr as AttributeInfo);
+    let struct_info = parse_macro_input!(item as StructInfo);
 
-    let (_name, generics, _struct_fields, _attributed_fields) = parsed.unpack();
-
-    let (_impl_generics, _type_generics, _where_clause) = &generics.split_for_impl();
-
-    if let Err(error) = validate_generics(attr, generics) {
+    if let Err(error) = validate_generics(&attr_info, &struct_info.generics()) {
         return error.to_compile_error().into();
     }
 
-    let gen = quote! { struct Test {}};
-
-    gen.into()
+    implement(attr_info, struct_info)
 }

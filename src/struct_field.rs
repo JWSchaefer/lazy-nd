@@ -1,3 +1,5 @@
+use proc_macro2::{Punct, Spacing};
+use quote::{ToTokens, TokenStreamExt};
 use syn::{parse::ParseStream, Ident, Result, Token, Type, Visibility};
 
 #[allow(dead_code)]
@@ -9,7 +11,7 @@ pub struct StructField {
 
 impl PartialEq for StructField {
     fn eq(&self, other: &Self) -> bool {
-        self.field.to_string() == other.field.to_string()
+        self.field == other.field
     }
 }
 
@@ -23,8 +25,7 @@ impl StructField {
     }
 
     fn single_parse_inner(input: ParseStream) -> Result<Self> {
-        let visibility: Visibility =
-            input.parse().unwrap_or_else(|_| Visibility::Inherited);
+        let visibility: Visibility = input.parse().unwrap_or_else(|_| Visibility::Inherited);
 
         let name: Ident = input.parse()?;
 
@@ -39,5 +40,14 @@ impl StructField {
             field: name,
             ty,
         })
+    }
+}
+
+impl ToTokens for StructField {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        self.visibility.to_tokens(tokens);
+        self.field.to_tokens(tokens);
+        tokens.append(Punct::new(':', Spacing::Alone));
+        self.ty.to_tokens(tokens);
     }
 }
