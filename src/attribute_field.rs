@@ -1,5 +1,6 @@
 use crate::quantity::Quantity;
 
+use quote::ToTokens;
 use syn::{
     bracketed, parenthesized, parse::ParseStream, Ident, Result, Token, Type,
 };
@@ -10,22 +11,6 @@ pub struct AttributeField {
     pub field: Ident,
     pub ty: Type,
 }
-
-// pub fn parse_inner(input: ParseStream<'_>) -> Result<Vec<Self>> {
-//     let mut attrs = Vec::new();
-//     while input.peek2(Token![:]) {
-//         let attr = input.call(Self::single_parse_inner)?;
-//         if attrs.iter().any(|x| *x == attr) {
-//             return Err(Error::new(
-//                 attr.name.span(),
-//                 "Expected a unique field name",
-//             ));
-//         }
-//
-//         attrs.push(attr);
-//     }
-//     Ok(attrs)
-// }
 
 impl AttributeField {
     pub fn parse_inner(input: ParseStream<'_>) -> Result<Vec<Self>> {

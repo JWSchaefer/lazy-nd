@@ -1,5 +1,5 @@
+use crate::attribute_field::AttributeField;
 use crate::struct_field::StructField;
-use crate::{attribute_field::AttributeField, generic_info::validate_generics};
 
 use syn::{
     braced,
@@ -19,7 +19,9 @@ pub struct StructInfo {
 }
 
 impl StructInfo {
-    pub fn unpack(self) -> (Ident, Generics, Vec<StructField>, Vec<AttributeField>) {
+    pub fn unpack(
+        self,
+    ) -> (Ident, Generics, Vec<StructField>, Vec<AttributeField>) {
         (
             self.name,
             self.generics,
@@ -48,8 +50,8 @@ fn filter_duplicates(fields: Vec<(String, Span)>) -> Vec<(String, Span)> {
 }
 
 fn validate_unique_fields(
-    struct_fields: &Vec<StructField>,
-    attribute_fields: &Vec<AttributeField>,
+    struct_fields: &[StructField],
+    attribute_fields: &[AttributeField],
 ) -> Result<()> {
     let mut struct_fields: Vec<(String, Span)> = struct_fields
         .iter()

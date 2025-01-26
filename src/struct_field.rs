@@ -25,7 +25,8 @@ impl StructField {
     }
 
     fn single_parse_inner(input: ParseStream) -> Result<Self> {
-        let visibility: Visibility = input.parse().unwrap_or_else(|_| Visibility::Inherited);
+        let visibility: Visibility =
+            input.parse().unwrap_or_else(|_| Visibility::Inherited);
 
         let name: Ident = input.parse()?;
 
