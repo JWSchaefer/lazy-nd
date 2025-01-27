@@ -1,11 +1,10 @@
 use crate::quantity::Quantity;
 
-use quote::ToTokens;
 use syn::{
     bracketed, parenthesized, parse::ParseStream, Ident, Result, Token, Type,
 };
 
-#[allow(dead_code)]
+#[derive(Clone)]
 pub struct AttributeField {
     pub quantity: Quantity,
     pub field: Ident,

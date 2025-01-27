@@ -5,6 +5,7 @@ use syn::{
     Error, Path, Result,
 };
 
+#[derive(Clone)]
 pub enum Quantity {
     Scalar,
     Vector,

@@ -8,7 +8,7 @@ mod struct_info;
 
 use attribute_info::AttributeInfo;
 use generic_info::validate_generics;
-use implement::implement;
+use implement::inner_implement;
 use proc_macro::TokenStream;
 use struct_info::StructInfo;
 use syn::parse_macro_input;
@@ -41,5 +41,5 @@ pub fn lazy_nd(attr: TokenStream, item: TokenStream) -> TokenStream {
         return error.to_compile_error().into();
     }
 
-    implement(attr_info, struct_info)
+    inner_implement(attr_info, struct_info)
 }
