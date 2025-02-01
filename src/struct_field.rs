@@ -3,6 +3,7 @@ use quote::{ToTokens, TokenStreamExt};
 use syn::{parse::ParseStream, Ident, Result, Token, Type, Visibility};
 
 #[allow(dead_code)]
+#[derive(Clone)]
 pub struct StructField {
     pub visibility: Visibility,
     pub field: Ident,

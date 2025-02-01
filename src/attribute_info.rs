@@ -18,7 +18,7 @@ impl Parse for AttributeInfo {
         if &name.to_string() != "dim" {
             return Err(Error::new(
                 name.span(),
-                format!("Unexpected token `{}`.", name.to_string()),
+                format!("Unexpected token `{}`.", name),
             ));
         }
 
