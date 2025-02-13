@@ -1,5 +1,0 @@
-error: Expected generic `<const D : usize>`
- --> $DIR/05-match_mismatch.rs:3:12
-  |
-3 | struct Test<const T: usize, D> {}
-  |            ^

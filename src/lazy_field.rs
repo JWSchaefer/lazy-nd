@@ -1,6 +1,7 @@
 use crate::quantity::Quantity;
 
 use syn::{
+    bracketed,
     parse::{Parse, ParseStream},
     punctuated::Punctuated,
     Ident, Result, Token, Type, Visibility,
@@ -21,15 +22,14 @@ impl PartialEq for LazyField {
 
 impl Parse for LazyField {
     fn parse(input: ParseStream) -> Result<Self> {
-        let visibility: Option<Visibility> = input.parse().ok();
-        let field: Ident = input.parse()?;
-        input.parse::<Token![:]>()?;
-        let ty: Type = input.parse()?;
-
         let quantity = match input.parse::<Quantity>() {
             Ok(quantity) => Some(quantity),
             Err(_) => None,
         };
+        let visibility: Option<Visibility> = input.parse().ok();
+        let field: Ident = input.parse()?;
+        input.parse::<Token![:]>()?;
+        let ty: Type = input.parse()?;
 
         Ok(LazyField {
             quantity,

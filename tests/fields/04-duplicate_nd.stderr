@@ -1,5 +1,0 @@
-error: field `position` already declared
- --> $DIR/04-duplicate_nd.rs:6:14
-  |
-6 |     #[scalar(position : f32)]
-  |              ^^^^^^^^

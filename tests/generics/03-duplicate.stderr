@@ -1,5 +1,0 @@
-error: Generic `<const D : usize>` already declared.
- --> $DIR/03-duplicate.rs:3:29
-  |
-3 | struct Test<const D: usize, const D: usize> {}
-  |                             ^^^^^

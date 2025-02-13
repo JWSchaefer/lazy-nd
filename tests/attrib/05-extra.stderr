@@ -1,5 +1,0 @@
-error: unexpected token
- --> $DIR/05-extra.rs:3:18
-  |
-3 | #[lazy_nd(dim = D, extra = 1)]
-  |                  ^

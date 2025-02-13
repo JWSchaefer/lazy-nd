@@ -1,20 +1,35 @@
 use crate::lazy_field::LazyField;
 use syn::{
-    parse::{Parse, ParseStream},
+    braced,
+    parse::{self, Parse, ParseStream},
     punctuated::Punctuated,
-    Result, Token,
+    Generics, Ident, Result, Token,
 };
 
 pub struct StructFields {
-    fields: Vec<LazyField>,
+    name: Ident,
+    generics: Generics,
+    pub fields: Vec<LazyField>,
 }
 
 impl Parse for StructFields {
     fn parse(input: ParseStream) -> Result<Self> {
-        let punctuated =
-            Punctuated::<LazyField, Token![,]>::parse_terminated(input)?;
+        let _: Token![struct] = input.parse()?;
+        let name: Ident = input.parse()?;
+        let generics: Generics = input.parse()?;
+
+        let content;
+        braced!(content in input);
+
+        let fields: Vec<LazyField> =
+            Punctuated::<LazyField, Token![,]>::parse_terminated(&content)?
+                .into_iter()
+                .collect();
+
         Ok(Self {
-            fields: punctuated.into_iter().collect(),
+            name,
+            generics,
+            fields,
         })
     }
 }

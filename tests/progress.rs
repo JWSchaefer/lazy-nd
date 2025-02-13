@@ -4,25 +4,18 @@ fn tests() {
 
     // General
     t.pass("tests/general/01-minimum.rs");
-    // Attrib
-    t.compile_fail("tests/attrib/01-mismatch.rs");
-    t.compile_fail("tests/attrib/02-missing.rs");
-    t.compile_fail("tests/attrib/03-empty.rs");
-    t.compile_fail("tests/attrib/04-wrong.rs");
-    t.compile_fail("tests/attrib/04-wrong.rs");
-    t.compile_fail("tests/attrib/05-extra.rs");
-    // Generics
-    t.pass("tests/generics/01-minimum_default.rs");
-    t.pass("tests/generics/02-minimum_multiple.rs");
-    t.compile_fail("tests/generics/03-duplicate.rs");
-    t.compile_fail("tests/generics/04-mismatch.rs");
-    t.compile_fail("tests/generics/05-match_mismatch.rs");
-    t.compile_fail("tests/generics/06-type.rs");
-    // Fields
-    t.pass("tests/fields/01-field.rs");
-    t.pass("tests/fields/02-scalar.rs");
-    t.pass("tests/fields/03-vector.rs");
-    t.compile_fail("tests/fields/04-duplicate_nd.rs");
-    t.compile_fail("tests/fields/05-duplicate_field.rs");
-    t.compile_fail("tests/fields/06-duplicate_cross.rs");
+    // Struct Attributes
+    t.pass("tests/struct_attributes/01-dim_usize.rs");
+    t.pass("tests/struct_attributes/02-dim_generic.rs");
+    t.compile_fail("tests/struct_attributes/03-dim_generic_invalid.rs");
+    t.compile_fail("tests/struct_attributes/04-dim_generic_undefined.rs");
+    t.pass("tests/struct_attributes/05-inner_true.rs");
+    t.pass("tests/struct_attributes/06-inner_false.rs");
+    t.compile_fail("tests/struct_attributes/07-inner_invalid.rs");
+    t.pass("tests/struct_attributes/08-both_usize_bool.rs");
+    t.pass("tests/struct_attributes/09-both_generic_bool.rs");
+    t.compile_fail("tests/struct_attributes/10-both_invalid_bool.rs");
+    t.compile_fail("tests/struct_attributes/11-both_undefined_bool.rs");
+    t.compile_fail("tests/struct_attributes/12-both_usize_invalid.rs");
+    t.compile_fail("tests/struct_attributes/13-both_generic_invalid.rs");
 }

@@ -1,5 +1,0 @@
-error: Unexpected token `lim`.
- --> $DIR/04-wrong.rs:3:11
-  |
-3 | #[lazy_nd(lim = D)]
-  |           ^^^

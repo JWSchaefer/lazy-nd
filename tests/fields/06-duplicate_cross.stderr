@@ -1,5 +1,0 @@
-error: field `mass` already declared
- --> $DIR/06-duplicate_cross.rs:6:5
-  |
-6 |     mass: f64,
-  |     ^^^^
