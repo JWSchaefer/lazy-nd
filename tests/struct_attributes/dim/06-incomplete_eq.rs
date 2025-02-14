@@ -1,6 +1,6 @@
 use lazy_nd::lazy_nd;
 
-#[lazy_nd(dim = 4)]
+#[lazy_nd(dim =)]
 struct Test {}
 
 fn main() {}

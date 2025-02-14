@@ -1,0 +1,7 @@
+error: expected `=`
+ --> tests/struct_attributes/dim/05-incomplete.rs:3:1
+  |
+3 | #[lazy_nd(dim)]
+  | ^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the attribute macro `lazy_nd` (in Nightly builds, run with -Z macro-backtrace for more info)

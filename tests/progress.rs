@@ -4,18 +4,18 @@ fn tests() {
 
     // General
     t.pass("tests/general/01-minimum.rs");
-    // Struct Attributes
-    t.pass("tests/struct_attributes/01-dim_usize.rs");
-    t.pass("tests/struct_attributes/02-dim_generic.rs");
-    t.compile_fail("tests/struct_attributes/03-dim_generic_invalid.rs");
-    t.compile_fail("tests/struct_attributes/04-dim_generic_undefined.rs");
-    t.pass("tests/struct_attributes/05-inner_true.rs");
-    t.pass("tests/struct_attributes/06-inner_false.rs");
-    t.compile_fail("tests/struct_attributes/07-inner_invalid.rs");
-    t.pass("tests/struct_attributes/08-both_usize_bool.rs");
-    t.pass("tests/struct_attributes/09-both_generic_bool.rs");
-    t.compile_fail("tests/struct_attributes/10-both_invalid_bool.rs");
-    t.compile_fail("tests/struct_attributes/11-both_undefined_bool.rs");
-    t.compile_fail("tests/struct_attributes/12-both_usize_invalid.rs");
-    t.compile_fail("tests/struct_attributes/13-both_generic_invalid.rs");
+    // Struct Attributes - Dim
+    t.pass("tests/struct_attributes/dim/01-usize.rs");
+    t.pass("tests/struct_attributes/dim/02-generic.rs");
+    t.compile_fail("tests/struct_attributes/dim/03-invalid.rs");
+    t.compile_fail("tests/struct_attributes/dim/04-undefined.rs");
+    t.compile_fail("tests/struct_attributes/dim/05-incomplete.rs");
+    t.compile_fail("tests/struct_attributes/dim/06-incomplete_eq.rs");
+    t.compile_fail("tests/struct_attributes/dim/07-incomplete_eq_comma.rs");
+    // Struct Attributes - Inner
+    t.pass("tests/struct_attributes/inner/01-bool.rs");
+    t.compile_fail("tests/struct_attributes/inner/02-invalid.rs");
+    t.compile_fail("tests/struct_attributes/inner/03-incomplete.rs");
+    t.compile_fail("tests/struct_attributes/inner/04-incomplete_eq.rs");
+    t.compile_fail("tests/struct_attributes/inner/03-incomplete_eq_comma.rs");
 }

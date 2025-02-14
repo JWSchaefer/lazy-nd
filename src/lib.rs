@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+#![allow(unused)]
+
 mod implement;
 mod lazy_field;
 mod quantity;

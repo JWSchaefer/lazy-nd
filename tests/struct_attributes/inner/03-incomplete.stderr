@@ -1,0 +1,7 @@
+error: unexpected end of input, expected identifier or integer literal
+ --> tests/struct_attributes/inner/03-incomplete.rs:3:1
+  |
+3 | #[lazy_nd(inner =)]
+  | ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the attribute macro `lazy_nd` (in Nightly builds, run with -Z macro-backtrace for more info)

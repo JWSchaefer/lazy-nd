@@ -1,0 +1,5 @@
+error: expected identifier or integer literal
+ --> tests/struct_attributes/dim/07-incomplete_eq_comma.rs:3:16
+  |
+3 | #[lazy_nd(dim =,)]
+  |                ^
