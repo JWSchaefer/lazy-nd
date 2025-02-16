@@ -26,12 +26,9 @@ fn get_dim(input: ParseStream) -> Result<Option<usize>> {
     if input.peek(Paren) {
         let content;
         parenthesized!(content in input);
-
         let dim: usize = content.parse::<LitInt>()?.base10_parse()?;
-
         return Ok(Some(dim));
     }
-
     Ok(None)
 }
 

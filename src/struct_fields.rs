@@ -7,8 +7,8 @@ use syn::{
 };
 
 pub struct StructFields {
-    name: Ident,
-    generics: Generics,
+    pub name: Ident,
+    pub generics: Generics,
     pub fields: Vec<LazyField>,
 }
 
