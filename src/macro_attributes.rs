@@ -18,11 +18,11 @@ impl Parse for Dim {
     }
 }
 
-pub struct StructAttributes {
+pub struct MacroAttributes {
     dim: Option<Dim>,
     inner: Option<LitBool>,
 }
-impl StructAttributes {
+impl MacroAttributes {
     pub fn dim(&self) -> Option<&Dim> {
         self.dim.as_ref()
     }
@@ -34,7 +34,7 @@ impl StructAttributes {
     }
 }
 
-impl Parse for StructAttributes {
+impl Parse for MacroAttributes {
     fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
         let mut dim_assignments = Vec::<Dim>::new();
         let mut inner_assignments = Vec::<LitBool>::new();

@@ -3,16 +3,17 @@
 
 mod implement;
 mod lazy_field;
+mod macro_attributes;
+mod macro_info;
 mod quantity;
-mod struct_attributes;
-mod struct_fields;
 mod struct_info;
 
+use macro_attributes::MacroAttributes;
+use macro_info::MacroInfo;
 use proc_macro::TokenStream;
 use quote::quote;
-use struct_attributes::StructAttributes;
-use struct_fields::StructFields;
 use struct_info::StructInfo;
+
 use syn::parse_macro_input;
 
 /// Parses the following
@@ -24,9 +25,9 @@ use syn::parse_macro_input;
 
 #[proc_macro_attribute]
 pub fn lazy_nd(attr: TokenStream, item: TokenStream) -> TokenStream {
-    let struct_info = StructInfo::new(
-        parse_macro_input!(attr as StructAttributes),
-        parse_macro_input!(item as StructFields),
+    let struct_info = MacroInfo::new(
+        parse_macro_input!(attr as MacroAttributes),
+        parse_macro_input!(item as StructInfo),
     );
 
     if let Err(err) = struct_info.validate() {

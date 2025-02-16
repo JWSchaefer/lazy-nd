@@ -8,10 +8,25 @@ use syn::{
 };
 
 pub struct LazyField {
-    pub quantity: Option<Quantity>,
-    pub visibility: Option<Visibility>,
-    pub field: Ident,
-    pub ty: Type,
+    quantity: Option<Quantity>,
+    visibility: Option<Visibility>,
+    field: Ident,
+    ty: Type,
+}
+
+impl LazyField {
+    pub fn quantity(&self) -> &Option<Quantity> {
+        &self.quantity
+    }
+    pub fn visibility(&self) -> &Option<Visibility> {
+        &self.visibility
+    }
+    pub fn field(&self) -> &Ident {
+        &self.field
+    }
+    pub fn ty(&self) -> &Type {
+        &self.ty
+    }
 }
 
 impl PartialEq for LazyField {

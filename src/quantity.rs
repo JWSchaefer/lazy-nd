@@ -12,16 +12,6 @@ pub enum Quantity {
     Vector(Option<usize>),
 }
 
-impl fmt::Display for Quantity {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Quantity::Scalar => write!(f, "Scalar"),
-            Quantity::Vector(Some(n)) => write!(f, "Vector({n})"),
-            Quantity::Vector(None) => write!(f, "Vector(Dim)"),
-        }
-    }
-}
-
 fn get_dim(input: ParseStream) -> Result<Option<usize>> {
     if input.peek(Paren) {
         let content;
