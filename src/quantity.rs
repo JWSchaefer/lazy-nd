@@ -1,7 +1,9 @@
+use crate::dim::Dim;
+use quote::quote;
 use std::fmt;
 use syn::{
     bracketed, parenthesized,
-    parse::{Parse, ParseStream},
+    parse::{Lookahead1, Parse, ParseStream},
     token::Paren,
     Error, Ident, LitInt, Result, Token,
 };
@@ -9,39 +11,44 @@ use syn::{
 #[derive(Clone)]
 pub enum Quantity {
     Scalar,
-    Vector(Option<usize>),
-}
-
-fn get_dim(input: ParseStream) -> Result<Option<usize>> {
-    if input.peek(Paren) {
-        let content;
-        parenthesized!(content in input);
-        let dim: usize = content.parse::<LitInt>()?.base10_parse()?;
-        return Ok(Some(dim));
-    }
-    Ok(None)
+    Vector(Dim),
 }
 
 impl Parse for Quantity {
     fn parse(input: ParseStream) -> Result<Self> {
+        // Parse attribute syntax - #[]
         input.parse::<Token![#]>()?;
-
         let content;
         bracketed!(content in input);
 
+        // Read ident as either scalar or vector
         let ident: Ident = content.parse()?;
 
-        let quantity = match ident.to_string().as_str() {
-            "scalar" => Quantity::Scalar,
-            "vector" => Quantity::Vector(get_dim(&content)?),
-            _ => {
-                return Err(Error::new(
-                    ident.span(),
-                    "Expected 'scalar' or 'vector'",
+        // If scalar, ensure not further information
+        if ident.to_string().as_str() == "scalar" {
+            if content.is_empty() {
+                Ok(Quantity::Scalar)
+            } else {
+                Err(Error::new(
+                    content.fork().span(),
+                    "Unexpected token. Expected `]`",
                 ))
             }
-        };
-
-        Ok(quantity)
+        // If vector, check for dimension info
+        } else if ident.to_string().as_str() == "vector" {
+            let dim: Dim;
+            // If no ($DIM) then floats dimension
+            if !content.is_empty() && content.peek(Paren) {
+                let inner_content;
+                parenthesized!(inner_content in content);
+                dim = inner_content.parse()?;
+            } else {
+                dim = Dim::Undefined;
+            }
+            Ok(Quantity::Vector(dim))
+        // If neither, then error
+        } else {
+            Err(Error::new(ident.span(), "Expected 'scalar' or 'vector'"))
+        }
     }
 }

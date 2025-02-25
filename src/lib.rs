@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused)]
 
+mod dim;
 mod implement;
 mod lazy_field;
 mod macro_attributes;

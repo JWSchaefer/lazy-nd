@@ -1,5 +1,5 @@
 error: expected boolean literal
- --> tests/struct_attributes/inner/02-invalid.rs:3:19
+ --> tests/macro_attributes/inner/02-invalid.rs:3:19
   |
 3 | #[lazy_nd(inner = 10)]
   |                   ^^

@@ -1,22 +1,7 @@
+use crate::dim::Dim;
+
 use proc_macro2::Span;
 use syn::{parse::Parse, Error, Ident, LitBool, LitInt, Result, Token};
-
-pub enum Dim {
-    Generic(Ident),
-    Explicit(usize),
-}
-impl Parse for Dim {
-    fn parse(input: syn::parse::ParseStream) -> Result<Self> {
-        let lookahead = input.lookahead1();
-        if lookahead.peek(Ident) {
-            input.parse().map(Dim::Generic)
-        } else if lookahead.peek(LitInt) {
-            input.parse::<LitInt>()?.base10_parse().map(Dim::Explicit)
-        } else {
-            Err(lookahead.error())
-        }
-    }
-}
 
 pub struct MacroAttributes {
     dim: Option<Dim>,

@@ -1,5 +1,5 @@
 error: expected boolean literal
- --> tests/struct_attributes/inner/05-incomplete_eq_comma.rs:3:18
+ --> tests/macro_attributes/inner/05-incomplete_eq_comma.rs:3:18
   |
 3 | #[lazy_nd(inner =,)]
   |                  ^

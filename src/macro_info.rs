@@ -1,11 +1,12 @@
-use crate::macro_attributes::{Dim, MacroAttributes};
+use crate::dim::Dim;
+use crate::macro_attributes::MacroAttributes;
 use crate::quantity::{self, Quantity};
-use crate::struct_info::StructInfo;
-use proc_macro::TokenStream;
+use crate::struct_info::{self, StructInfo};
+
+use proc_macro::{Ident, TokenStream};
 use quote::quote;
 use syn::spanned::Spanned;
 use syn::{ConstParam, Error, GenericParam, Result, Type, TypePath};
-
 pub struct MacroInfo {
     attrs: MacroAttributes,
     struct_info: StructInfo,
@@ -48,20 +49,26 @@ impl MacroInfo {
             }
         }
 
-        // if any attributed fields do not specify dim {
-        //      ensure dim given
-        // }
+        // If any attributed fields do not specify dim then ensure dim is given
 
         let fields_float_dim: bool = !self
             .struct_info
             .fields
             .iter()
-            .map(|f| f.quantity().is_none())
+            .filter_map(|f| {
+                if let Some(Quantity::Vector(Dim::Undefined)) = f.quantity() {
+                    Some(true)
+                } else {
+                    None
+                }
+            })
             .collect::<Vec<bool>>()
             .is_empty();
 
         let dim_not_given: bool = self.attrs.dim().is_none();
 
+        // TODO: Fix quantity parsing to identify fields as attributed or not as well as
+        // dimensioned or not. The fix fields_float_dim to disregard non attributed fields.
         if fields_float_dim && dim_not_given {
             return Err(Error::new(
                     self.struct_info.name.span(),
@@ -72,6 +79,20 @@ impl MacroInfo {
         // if attributed fields specifies generic dim {
         //      ensure dim is generic and generics match
         // }
+        //
+
+        // let quantitites: Vec<Ident> = self
+        //     .struct_info
+        //     .fields
+        //     .into_iter()
+        //     .filter_map(|f| {
+        //         if let Some(Quantity(Dim::Generic(i))) = f.quantity().clone() {
+        //             Some(i)
+        //         } else {
+        //             None
+        //         }
+        //     })
+        //     .collect();
 
         if let Some(Dim::Generic(macro_generic)) = self.attrs.dim() {}
         Ok(())
