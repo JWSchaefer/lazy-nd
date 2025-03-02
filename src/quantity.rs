@@ -8,7 +8,7 @@ use syn::{
     Error, Ident, LitInt, Result, Token,
 };
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum Quantity {
     Scalar,
     Vector(Dim),

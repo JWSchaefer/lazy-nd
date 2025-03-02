@@ -21,10 +21,14 @@ fn tests() {
     t.compile_fail("tests/macro_attributes/inner/05-incomplete_eq_comma.rs");
     t.compile_fail("tests/macro_attributes/inner/06-overdefined.rs");
     // Struct Attributes
-    t.pass("tests/struct_attributes/01-normal_fields.rs");
-    t.pass("tests/struct_attributes/02-scalar_field.rs");
-    t.pass("tests/struct_attributes/03-vector_float.rs");
-    t.pass("tests/struct_attributes/04-vector_literal.rs");
-    t.pass("tests/struct_attributes/05-vector_generic.rs");
-    t.compile_fail("tests/struct_attributes/06-vector_invalid.rs");
+    t.pass("tests/struct_attributes/simple/01-fields.rs");
+    t.pass("tests/struct_attributes/simple/02-scalar.rs");
+    t.pass("tests/struct_attributes/simple/03-vector_underdefined_valid.rs");
+    t.pass("tests/struct_attributes/simple/04-vector_literal.rs");
+    t.pass("tests/struct_attributes/simple/05-vector_generic.rs");
+    t.compile_fail("tests/struct_attributes/simple/06-vector_invalid_bool.rs");
+    t.compile_fail("tests/struct_attributes/simple/07-vector_invalid_float.rs");
+    t.compile_fail(
+        "tests/struct_attributes/simple/08-vector_invalid_string.rs",
+    );
 }

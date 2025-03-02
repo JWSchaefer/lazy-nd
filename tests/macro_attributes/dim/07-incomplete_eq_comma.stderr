@@ -1,5 +1,0 @@
-error: Unexpected token. Expected usize literal or generic.
- --> tests/macro_attributes/dim/07-incomplete_eq_comma.rs:3:16
-  |
-3 | #[lazy_nd(dim =,)]
-  |                ^

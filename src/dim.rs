@@ -3,10 +3,10 @@ use syn::{
     parse::{Parse, ParseStream},
     Error,
     Expr::Paren,
-    Ident, LitBool, LitInt, Result,
+    Ident, LitBool, LitFloat, LitInt, LitStr, Result,
 };
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub enum Dim {
     Undefined,
     Generic(Ident),
@@ -15,11 +15,12 @@ pub enum Dim {
 
 impl Parse for Dim {
     fn parse(input: ParseStream) -> Result<Self> {
-        if input.peek(LitBool) {
-            return Err(input.error(
-                "Unexpected token. Expected usize literal or generic.",
-            ));
+        let msg = "Expected literal int or generic.";
+
+        if input.peek(LitBool) || input.peek(LitStr) || input.peek(LitFloat) {
+            return Err(input.error(msg));
         }
+
         let dim: Result<LitInt> = input.parse();
         if let Ok(d) = dim {
             return Ok(Dim::Literal(d.base10_parse()?));
@@ -30,9 +31,19 @@ impl Parse for Dim {
             return Ok(Dim::Generic(d));
         }
 
-        Err(Error::new(
-            input.fork().span(),
-            "Unexpected token. Expected usize literal or generic.",
-        ))
+        Err(input.error(msg))
+    }
+}
+
+impl PartialEq for Dim {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (Dim::Undefined, Dim::Undefined) => true,
+            (Dim::Undefined, _) => false,
+            (Dim::Generic(i_a), Dim::Generic(i_b)) => i_a == i_b,
+            (Dim::Generic(_), _) => false,
+            (Dim::Literal(u_a), Dim::Literal(u_b)) => u_a == u_b,
+            (Dim::Literal(_), _) => false,
+        }
     }
 }
