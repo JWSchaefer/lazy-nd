@@ -1,0 +1,5 @@
+error: Expected literal int or generic.
+ --> tests/macro_attributes/dim/03-invalid.rs:3:17
+  |
+3 | #[lazy_nd(dim = false)]
+  |                 ^^^^^

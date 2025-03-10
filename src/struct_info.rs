@@ -1,10 +1,14 @@
-use crate::dim::Dim;
+use std::collections::HashSet;
+
 use crate::lazy_field::LazyField;
 use crate::quantity::Quantity;
+use crate::{dim::Dim, quantity};
+use syn::token::Continue;
 use syn::{
     braced,
     parse::{self, Parse, ParseStream},
     punctuated::Punctuated,
+    spanned::Spanned,
     ConstParam, Error, GenericParam, Generics, Ident, Result, Token, Type,
     TypePath,
 };
@@ -40,6 +44,10 @@ impl Parse for StructInfo {
 }
 
 impl StructInfo {
+    pub fn name(&self) -> &Ident {
+        &self.name
+    }
+
     pub fn generics(&self) -> &Generics {
         &self.generics
     }
@@ -66,6 +74,66 @@ impl StructInfo {
             .collect()
     }
 
+    pub fn attribute_fields(&self) -> Vec<&LazyField> {
+        self.fields()
+            .iter()
+            .filter(|f| f.quantity().is_some())
+            .collect()
+    }
+
+    pub fn vector_fields(&self) -> Vec<&LazyField> {
+        self.fields()
+            .iter()
+            .filter(|f| matches!(f.quantity(), &Some(Quantity::Vector(_))))
+            .collect()
+    }
+
+    pub fn scalar_fields(&self) -> Vec<&LazyField> {
+        self.fields()
+            .iter()
+            .filter(|f| matches!(f.quantity(), &Some(Quantity::Scalar)))
+            .collect()
+    }
+
+    pub fn struct_fields(&self) -> Vec<&LazyField> {
+        self.fields()
+            .iter()
+            .filter(|f| f.quantity().is_none())
+            .collect()
+    }
+
+    pub fn attribute_idents(&self) -> Vec<&Ident> {
+        self.attribute_fields().iter().map(|f| f.field()).collect()
+    }
+
+    pub fn attribute_types(&self) -> Vec<&Type> {
+        self.attribute_fields().iter().map(|f| f.ty()).collect()
+    }
+
+    pub fn return_types(&self) -> Vec<Ident> {
+        self.attribute_fields()
+            .iter()
+            .filter_map(|f| match f.quantity() {
+                Some(Quantity::Vector(_)) => {
+                    Some(Ident::new("ArrayView2", f.ty().span()))
+                }
+                Some(Quantity::Scalar) => {
+                    Some(Ident::new("ArrayView1", f.ty().span()))
+                }
+                None => None,
+            })
+            .collect()
+    }
+
+    pub fn unique_attribute_types(&self) -> Vec<Ident> {
+        self.attribute_types()
+            .into_iter()
+            .map(|t| Ident::new(&format!("{}", quote! {#t}), t.span()))
+            .collect::<HashSet<_>>()
+            .into_iter()
+            .collect()
+    }
+
     pub fn check_const_generic(&self, dim: &Dim) -> bool {
         let id: &Ident;
 
@@ -84,7 +152,6 @@ impl StructInfo {
             .filter_map(|g| {
                 if let GenericParam::Const(ConstParam { ident, ty, .. }) = g {
                     if let Type::Path(TypePath { path, .. }) = ty {
-                        println!("{} - {}", quote! {#ident}, quote! {#id});
                         if path.is_ident(dtype) && ident == id {
                             return Some((ident, ty));
                         }

@@ -1,0 +1,5 @@
+error: unexpected token, expected `)`
+ --> tests/struct_attributes/simple/06-vector_invalid_bool.rs:5:14
+  |
+5 |     #[vector(false)]
+  |              ^^^^^

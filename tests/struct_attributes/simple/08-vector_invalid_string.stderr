@@ -1,0 +1,5 @@
+error: unexpected token, expected `)`
+ --> tests/struct_attributes/simple/08-vector_invalid_string.rs:5:14
+  |
+5 |     #[vector("dim")]
+  |              ^^^^^

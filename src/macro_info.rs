@@ -63,21 +63,34 @@ impl MacroInfo {
         Ok(())
     }
 
-    // fn validate_macro_struct
-    //
     pub fn validate(&self) -> Result<()> {
         // If attrs.dim is a Generic then ensure it is given in struct definition
         self.validate_macro_matches_struct()?;
-
         // If any attributed fields do not specify dim then ensure dim is given
         self.validate_floating_fields()?;
-
+        // If attributed fields specifies generic dim ensure dim is generic and generics match
         self.validate_field_generic_dim()?;
-
-        // if attributed fields specifies generic dim {
-        //      ensure dim is generic and generics match
-        // }
-
         Ok(())
+    }
+
+    pub fn implement(self) -> TokenStream {
+        let inner = self.attrs.inner();
+        if let Some(true) = inner {
+            self.implement_inner()
+        } else {
+            self.implement_normal()
+        }
+    }
+
+    fn implement_inner(self) -> TokenStream {
+        let inner_name = Ident::new(
+            &format!("{}Inner", self.struct_info.name()),
+            self.struct_info.name().span(),
+        );
+        quote! {}.into()
+    }
+
+    fn implement_normal(self) -> TokenStream {
+        quote! {struct Test{}}.into()
     }
 }

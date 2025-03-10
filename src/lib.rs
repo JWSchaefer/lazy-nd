@@ -1,8 +1,8 @@
 #![allow(dead_code)]
 #![allow(unused)]
 
+mod data_info;
 mod dim;
-mod implement;
 mod lazy_field;
 mod macro_attributes;
 mod macro_info;
@@ -18,8 +18,8 @@ use struct_info::StructInfo;
 use syn::parse_macro_input;
 
 /// Parses the following
-/// #[lazy_nd(inner = $BOOL, dim = $[GENERIC | USIZE])]
-/// struct $STRUCT_NAME<$GENERICS> {
+/// #[lazy_nd(inner = $BOOL?, dim = $[GENERIC | USIZE]?)]
+/// struct $STRUCT_NAME<$GENERICS?> {
 ///     #[$QUANTITY([GENERIC | USIZE]?)]
 ///     $NAME : $TYPE,
 /// }
@@ -35,5 +35,5 @@ pub fn lazy_nd(attr: TokenStream, item: TokenStream) -> TokenStream {
         return err.to_compile_error().into();
     }
 
-    quote! {}.into()
+    struct_info.implement()
 }
